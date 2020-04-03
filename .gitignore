@@ -1,0 +1,16 @@
+.gradle/
+build/
+target/
+reports/
+gradle.properties
+
+bin/
+.externalToolBuilders/
+.settings/
+.classpath
+.project
+*.i??
+out/
+.DS_Store
+.idea/
+libs/

@@ -1,0 +1,78 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'de.undercouch:gradle-download-task:4.0.4'
+    }
+}
+
+plugins {
+    id 'java'
+    id "de.undercouch.download" version "4.0.4"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+//allprojects {
+//    repositories {
+//        jcenter()
+//        maven { url "https://jitpack.io" }
+//    }
+//}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+//    compile fileTree(dir: '/Users/pramodmaurya/Downloads/or-tools_MacOsX-10.15.2_v7.5.7466/req_lib')
+//    implementation 'com.github.self-maurya:or-tools-routing:master-SNAPSHOT'
+    compile fileTree(dir: 'libs/or-tools-routing-master')
+//    implementation('com.github.self-maurya:or-tools-routing') {
+//        version {
+//            branch = 'master'
+//        }
+//    }
+
+}
+
+apply plugin: 'de.undercouch.download'
+
+//task installDependencies(type: Sync) {
+//    configurations.compile.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+//        if (artifact.file.name.contains('jar')) {
+//            from zipTree(artifact.file)
+//            into 'my-libs'
+//        }
+//    }
+//}
+//assemble.dependsOn('installDependencies')
+
+//task downloadFile(type: Download) {
+//    src 'https://github.com/self-maurya/or-tools-routing/archive/master.zip'
+//    dest buildDir
+//    onlyIfModified true
+//}
+
+task downloadZipFile(type: Download) {
+    src 'https://github.com/self-maurya/or-tools-routing/archive/master.zip'
+    dest new File(buildDir, 'master.zip')
+    onlyIfModified true
+}
+
+task downloadAndUnzipFile(dependsOn: downloadZipFile, type: Copy) {
+    from zipTree(downloadZipFile.dest)
+    into libsDirName
+}
+
+assemble.dependsOn('downloadAndUnzipFile')
+
+
+
+

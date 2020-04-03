@@ -1,0 +1,7 @@
+rootProject.name = 'idla'
+
+//sourceControl {
+//    gitRepository("https://github.com/self-maurya/or-tools-routing.git") {
+//        producesModule("com.github.self-maurya:or-tools-routing")
+//    }
+//}
